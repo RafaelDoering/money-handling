@@ -1,3 +1,3 @@
-import {Money} from './models/Money.js';
+const Money = require('./models/Money.js');
 
-export {Money};
+module.exports = Money;

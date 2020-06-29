@@ -55,4 +55,4 @@ class Money {
   }
 };
 
-export {Money};
+module.exports = Money;
