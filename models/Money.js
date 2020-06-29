@@ -33,6 +33,20 @@ class Money {
   }
 
   /**
+   * Porcentage of money value to amount.
+   *
+   * @param {string} amount
+   * @param {string} percentage
+   *
+   * @return {string}
+   *
+   * @example percentage('10.00', '5.00%')
+   */
+  static percentage(amount, percentage) {
+    return this.toMoneyString((this.toMoneyInt(amount) * Number.parseFloat(percentage.replace('%', ''))) / 100);
+  }
+
+  /**
    * Convert money int to fixed decimal string.
    *
    * @param {number} amount
