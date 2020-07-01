@@ -33,7 +33,7 @@ class Money {
   }
 
   /**
-   * Porcentage of money value to amount.
+   * Percentage of money value to amount.
    *
    * @param {string} amount
    * @param {string} percentage
