@@ -9,10 +9,17 @@ A lightweight package for money handling
 const balanceAfterAddition = Money.add('0.00', '3750.00');
 
 // Subtract operation syntax:
-const balanceAfterSubtraction = Money.subtract(balance, '3750.00');
+const balanceAfterSubtraction = Money.subtract(balanceAfterAddition, '1000.00');
+
+// Percentage operation syntax:
+const balanceAfterPercentage = Money.subtract(balanceAfterSubtraction, '10.00%');
 ```
 
 ## Changelog
+
+**0.1.0** - Remove number rounding
+
+**0.0.7** - Percentage operations
 
 **0.0.5** - Readme
 
