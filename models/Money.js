@@ -9,13 +9,14 @@ class Money {
    *
    * @param {string} amount
    * @param {string} amountToAdd
+   * @param {boolean} round
    *
    * @return {string}
    *
    * @example add('10.00', '5.00')
    */
-  static add(amount, amountToAdd) {
-    return this.toMoneyString(this.toMoneyInt(amount) + this.toMoneyInt(amountToAdd));
+  static add(amount, amountToAdd, round = true) {
+    return toMoneyString(toMoneyInt(amount) + toMoneyInt(amountToAdd), round);
   }
 
   /**
@@ -23,13 +24,14 @@ class Money {
    *
    * @param {string} amount
    * @param {string} amountToSubtract
+   * @param {boolean} round
    *
    * @return {string}
    *
    * @example subtract('10.00', '5.00')
    */
-  static subtract(amount, amountToSubtract) {
-    return this.toMoneyString(this.toMoneyInt(amount) - this.toMoneyInt(amountToSubtract));
+  static subtract(amount, amountToSubtract, round = true) {
+    return toMoneyString(toMoneyInt(amount) - toMoneyInt(amountToSubtract), round);
   }
 
   /**
@@ -37,37 +39,39 @@ class Money {
    *
    * @param {string} amount
    * @param {string} percentage
+   * @param {boolean} round
    *
    * @return {string}
    *
    * @example percentage('10.00', '5.00%')
    */
-  static percentage(amount, percentage) {
-    return this.toMoneyString((this.toMoneyInt(amount) * Number.parseFloat(percentage.replace('%', ''))) / 100);
-  }
-
-  /**
-   * Convert money int to fixed decimal string.
-   *
-   * @param {number} amount
-   *
-   * @return {string} Formated amount
-   */
-  static toMoneyString(amount) {
-    return _toFixedWithoutRounding(Number.parseFloat(amount / 100), 2);
-  }
-
-  /**
-   * Convert string to int money.
-   *
-   * @param {string} amount
-   *
-   * @return {number} Float amount
-   */
-  static toMoneyInt(amount) {
-    return Number.parseInt(Number.parseFloat(amount) * 100);
+  static percentage(amount, percentage, round = true) {
+    return toMoneyString((toMoneyInt(amount) * Number.parseFloat(percentage.replace('%', ''))) / 100, round);
   }
 };
+
+/**
+ * Convert money int to fixed decimal string.
+ *
+ * @param {number} amount
+ * @param {boolean} round
+ *
+ * @return {string} Formated amount
+ */
+function toMoneyString(amount, round = true) {
+  return round ? (amount / 100).toFixed(2) : toFixedWithoutRounding(amount / 100, 2);
+}
+
+/**
+ * Convert string to int money.
+ *
+ * @param {string} amount
+ *S
+ * @return {number} Float amount
+ */
+function toMoneyInt(amount) {
+  return Number.parseInt((Number.parseFloat(amount) * 100).toString(), 10);
+}
 
 /**
  * Fix a number to certain decimal places.
@@ -77,7 +81,7 @@ class Money {
  *
  * @return {string} Float amount
  */
-function _toFixedWithoutRounding(number, numberOfDecimalPlaces) {
+function toFixedWithoutRounding(number, numberOfDecimalPlaces) {
   const reg = new RegExp('^-?\\d+(?:\\.\\d{0,' + numberOfDecimalPlaces + '})?', 'g');
 
   const numberWithoutSurplusDecimalPlaces = number.toString().match(reg)[0];
