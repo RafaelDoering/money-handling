@@ -54,7 +54,7 @@ class Money {
    * @return {string} Formated amount
    */
   static toMoneyString(amount) {
-    return Number.parseFloat(amount / 100).toFixed(2);
+    return _toFixedWithoutRounding(Number.parseFloat(amount / 100), 2);
   }
 
   /**
@@ -68,5 +68,29 @@ class Money {
     return Number.parseInt(Number.parseFloat(amount) * 100);
   }
 };
+
+/**
+ * Fix a number to certain decimal places.
+ *
+ * @param {number} number
+ * @param {number} numberOfDecimalPlaces
+ *
+ * @return {string} Float amount
+ */
+function _toFixedWithoutRounding(number, numberOfDecimalPlaces) {
+  const reg = new RegExp('^-?\\d+(?:\\.\\d{0,' + numberOfDecimalPlaces + '})?', 'g');
+
+  const numberWithoutSurplusDecimalPlaces = number.toString().match(reg)[0];
+  const dotIndex = numberWithoutSurplusDecimalPlaces.indexOf('.');
+
+  if (dotIndex === -1) {
+    return numberWithoutSurplusDecimalPlaces + '.' + '0'.repeat(numberOfDecimalPlaces);
+  }
+  const decimalPlacesToAdd = numberOfDecimalPlaces - (numberWithoutSurplusDecimalPlaces.length - dotIndex) + 1;
+
+  return decimalPlacesToAdd > 0 ?
+    (numberWithoutSurplusDecimalPlaces + '0'.repeat(decimalPlacesToAdd)) :
+    numberWithoutSurplusDecimalPlaces;
+}
 
 module.exports = Money;
