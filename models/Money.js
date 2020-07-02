@@ -1,3 +1,6 @@
+const truncateNumberDecimalPlaces = require('./../utils/truncateNumberDecimalPlaces');
+const truncateStringDecimalPlaces = require('./../utils/truncateStringDecimalPlaces');
+
 /**
  * Class for manipulating money values.
  * @class
@@ -9,14 +12,17 @@ class Money {
    *
    * @param {string} amount
    * @param {string} amountToAdd
-   * @param {boolean} round
+   * @param {object} options
    *
    * @return {string}
    *
-   * @example add('10.00', '5.00')
+   * @example add('10.00', '5.00');
    */
-  static add(amount, amountToAdd, round = true) {
-    return toMoneyString(toMoneyInt(amount) + toMoneyInt(amountToAdd), round);
+  static add(amount, amountToAdd, options = {round: true}) {
+    amount = truncateStringDecimalPlaces(amount, 2);
+    amountToAdd = truncateStringDecimalPlaces(amountToAdd, 2);
+
+    return centsToMoney(moneyToCents(amount) + moneyToCents(amountToAdd), options.round);
   }
 
   /**
@@ -24,14 +30,17 @@ class Money {
    *
    * @param {string} amount
    * @param {string} amountToSubtract
-   * @param {boolean} round
+   * @param {object} options
    *
    * @return {string}
    *
-   * @example subtract('10.00', '5.00')
+   * @example subtract('10.00', '5.00');
    */
-  static subtract(amount, amountToSubtract, round = true) {
-    return toMoneyString(toMoneyInt(amount) - toMoneyInt(amountToSubtract), round);
+  static subtract(amount, amountToSubtract, options = {round: true}) {
+    amount = truncateStringDecimalPlaces(amount, 2);
+    amountToSubtract = truncateStringDecimalPlaces(amountToSubtract, 2);
+
+    return centsToMoney(moneyToCents(amount) - moneyToCents(amountToSubtract), options.round);
   }
 
   /**
@@ -39,62 +48,41 @@ class Money {
    *
    * @param {string} amount
    * @param {string} percentage
-   * @param {boolean} round
+   * @param {object} options
    *
    * @return {string}
    *
-   * @example percentage('10.00', '5.00%')
+   * @example percentage('10.00', '5.00%');
+   * @example percentage('10.00', '5.00%', { round: false });
    */
-  static percentage(amount, percentage, round = true) {
-    return toMoneyString((toMoneyInt(amount) * Number.parseFloat(percentage.replace('%', ''))) / 100, round);
+  static percentage(amount, percentage, options = {round: true}) {
+    amount = truncateStringDecimalPlaces(amount, 2);
+
+    return centsToMoney((moneyToCents(amount) * Number.parseFloat(percentage.replace('%', ''))) / 100, options.round);
   }
 };
 
 /**
- * Convert money int to fixed decimal string.
+ * Convert cents amount to money string.
  *
  * @param {number} amount
  * @param {boolean} round
  *
  * @return {string} Formated amount
  */
-function toMoneyString(amount, round = true) {
-  return round ? (amount / 100).toFixed(2) : toFixedWithoutRounding(amount / 100, 2);
+function centsToMoney(amount, round = true) {
+  return round ? (amount / 100).toFixed(2) : truncateNumberDecimalPlaces(amount / 100, 2);
 }
 
 /**
- * Convert string to int money.
+ * Convert money string to int cents.
  *
  * @param {string} amount
  *S
- * @return {number} Float amount
+ * @return {number} Cents amount
  */
-function toMoneyInt(amount) {
-  return Number.parseInt((Number.parseFloat(amount) * 100).toString(), 10);
-}
-
-/**
- * Fix a number to certain decimal places.
- *
- * @param {number} number
- * @param {number} numberOfDecimalPlaces
- *
- * @return {string} Float amount
- */
-function toFixedWithoutRounding(number, numberOfDecimalPlaces) {
-  const reg = new RegExp('^-?\\d+(?:\\.\\d{0,' + numberOfDecimalPlaces + '})?', 'g');
-
-  const numberWithoutSurplusDecimalPlaces = number.toString().match(reg)[0];
-  const dotIndex = numberWithoutSurplusDecimalPlaces.indexOf('.');
-
-  if (dotIndex === -1) {
-    return numberWithoutSurplusDecimalPlaces + '.' + '0'.repeat(numberOfDecimalPlaces);
-  }
-  const decimalPlacesToAdd = numberOfDecimalPlaces - (numberWithoutSurplusDecimalPlaces.length - dotIndex) + 1;
-
-  return decimalPlacesToAdd > 0 ?
-    (numberWithoutSurplusDecimalPlaces + '0'.repeat(decimalPlacesToAdd)) :
-    numberWithoutSurplusDecimalPlaces;
+function moneyToCents(amount) {
+  return Number.parseInt((Number.parseFloat(amount) * 100).toFixed(0), 10);
 }
 
 module.exports = Money;

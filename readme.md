@@ -17,6 +17,8 @@ const balanceAfterPercentage = Money.subtract(balanceAfterSubtraction, '10.00%')
 
 ## Changelog
 
+**0.2.0** - Fixed float precision
+
 **0.1.2** - Add round flag on operations
 
 **0.1.0** - Remove number rounding
