@@ -4,7 +4,10 @@ A lightweight package for money handling
 
 ## Quick Examples:
 
-```javascript
+### V1
+```typescript
+import Money from 'money-handling';
+
 // Add operation syntax:
 const balanceAfterAddition = Money.add('0.00', '3750.00');
 
@@ -15,7 +18,24 @@ const balanceAfterSubtraction = Money.subtract(balanceAfterAddition, '1000.00');
 const balanceAfterPercentage = Money.percentage(balanceAfterSubtraction, '10.00%');
 ```
 
+### V2
+```typescript
+import {MoneyV2} from 'money-handling';
+
+const money = new MoneyV2('0.00');
+
+// Add operation syntax:
+money.add('3750.00');
+
+// Subtract operation syntax:
+money.subtract('1000.00');
+
+console.log(money.getAmount());
+```
+
 ## Changelog
+
+**2.0.0** - Add class MoneyV2 with operation chaining
 
 **1.1.0** - Add comparation functions
 
