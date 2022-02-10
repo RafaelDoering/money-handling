@@ -1,20 +1,3 @@
 {
-    "env": {
-        "browser": true,
-        "es2020": true,
-        "node": true
-    },
-    "extends": [
-        "google"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 11,
-        "sourceType": "module"
-    },
-    "rules": {
-      "no-unused-vars": "off",
-      "camelcase": "off",
-      "max-len": ["error", { "code": 120 }],
-      "linebreak-style": ["error", "windows"]
-    }
+  "extends": "./node_modules/gts/"
 }

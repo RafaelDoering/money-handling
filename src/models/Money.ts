@@ -1,5 +1,5 @@
-const truncateNumberDecimalPlaces = require('./../utils/truncateNumberDecimalPlaces');
-const truncateStringDecimalPlaces = require('./../utils/truncateStringDecimalPlaces');
+import truncateNumberDecimalPlaces from '../utils/truncate-number-decimal-places';
+import truncateStringDecimalPlaces from '../utils/truncate-string-decimal-places';
 
 /**
  * Class for manipulating money values.
@@ -18,11 +18,14 @@ class Money {
    *
    * @example add('10.00', '5.00');
    */
-  static add(amount, amountToAdd, options = {round: true}) {
+  static add(amount: string, amountToAdd: string, options = {round: true}) {
     amount = truncateStringDecimalPlaces(amount, 2);
     amountToAdd = truncateStringDecimalPlaces(amountToAdd, 2);
 
-    return centsToMoney(moneyToCents(amount) + moneyToCents(amountToAdd), options.round);
+    return centsToMoney(
+      moneyToCents(amount) + moneyToCents(amountToAdd),
+      options.round
+    );
   }
 
   /**
@@ -36,11 +39,18 @@ class Money {
    *
    * @example subtract('10.00', '5.00');
    */
-  static subtract(amount, amountToSubtract, options = {round: true}) {
+  static subtract(
+    amount: string,
+    amountToSubtract: string,
+    options = {round: true}
+  ) {
     amount = truncateStringDecimalPlaces(amount, 2);
     amountToSubtract = truncateStringDecimalPlaces(amountToSubtract, 2);
 
-    return centsToMoney(moneyToCents(amount) - moneyToCents(amountToSubtract), options.round);
+    return centsToMoney(
+      moneyToCents(amount) - moneyToCents(amountToSubtract),
+      options.round
+    );
   }
 
   /**
@@ -55,12 +65,20 @@ class Money {
    * @example percentage('10.00', '5.00%');
    * @example percentage('10.00', '5.00%', { round: false });
    */
-  static percentage(amount, percentage, options = {round: true}) {
+  static percentage(
+    amount: string,
+    percentage: string,
+    options = {round: true}
+  ) {
     amount = truncateStringDecimalPlaces(amount, 2);
 
-    return centsToMoney((moneyToCents(amount) * Number.parseFloat(percentage.replace('%', ''))) / 100, options.round);
+    return centsToMoney(
+      (moneyToCents(amount) * Number.parseFloat(percentage.replace('%', ''))) /
+        100,
+      options.round
+    );
   }
-};
+}
 
 /**
  * Convert cents amount to money string.
@@ -70,8 +88,10 @@ class Money {
  *
  * @return {string} Formated amount
  */
-function centsToMoney(amount, round = true) {
-  return round ? (amount / 100).toFixed(2) : truncateNumberDecimalPlaces(amount / 100, 2);
+function centsToMoney(amount: number, round = true) {
+  return round
+    ? (amount / 100).toFixed(2)
+    : truncateNumberDecimalPlaces(amount / 100, 2);
 }
 
 /**
@@ -81,8 +101,8 @@ function centsToMoney(amount, round = true) {
  *S
  * @return {number} Cents amount
  */
-function moneyToCents(amount) {
+function moneyToCents(amount: string) {
   return Number.parseInt((Number.parseFloat(amount) * 100).toFixed(0), 10);
 }
 
-module.exports = Money;
+export default Money;

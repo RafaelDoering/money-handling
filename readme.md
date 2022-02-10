@@ -12,10 +12,12 @@ const balanceAfterAddition = Money.add('0.00', '3750.00');
 const balanceAfterSubtraction = Money.subtract(balanceAfterAddition, '1000.00');
 
 // Percentage operation syntax:
-const balanceAfterPercentage = Money.subtract(balanceAfterSubtraction, '10.00%');
+const balanceAfterPercentage = Money.percentage(balanceAfterSubtraction, '10.00%');
 ```
 
 ## Changelog
+
+**1.0.0** - Add typescript
 
 **0.2.0** - Fixed float precision
 
