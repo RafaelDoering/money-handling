@@ -17,6 +17,8 @@ const balanceAfterPercentage = Money.percentage(balanceAfterSubtraction, '10.00%
 
 ## Changelog
 
+**1.1.0** - Add comparation functions
+
 **1.0.0** - Add typescript
 
 **0.2.0** - Fixed float precision

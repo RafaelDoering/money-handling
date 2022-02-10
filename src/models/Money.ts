@@ -54,6 +54,82 @@ class Money {
   }
 
   /**
+   * Compare two amounts.
+   *
+   * @param {string} amount1
+   * @param {string} amount2
+   *
+   * @return {boolean}
+   *
+   * @example isGreaterThan('10.00', '5.00');
+   */
+  static isGreaterThan(amount1: string, amount2: string) {
+    amount1 = truncateStringDecimalPlaces(amount1, 2);
+    amount2 = truncateStringDecimalPlaces(amount2, 2);
+
+    return (
+      parseInt(amount1.replace('.', '')) > parseInt(amount2.replace('.', ''))
+    );
+  }
+
+  /**
+   * Compare two amounts.
+   *
+   * @param {string} amount1
+   * @param {string} amount2
+   *
+   * @return {boolean}
+   *
+   * @example isGreaterThanOrEqual('10.00', '5.00');
+   */
+  static isGreaterThanOrEqual(amount1: string, amount2: string) {
+    amount1 = truncateStringDecimalPlaces(amount1, 2);
+    amount2 = truncateStringDecimalPlaces(amount2, 2);
+
+    return (
+      parseInt(amount1.replace('.', '')) >= parseInt(amount2.replace('.', ''))
+    );
+  }
+
+  /**
+   * Compare two amounts.
+   *
+   * @param {string} amount1
+   * @param {string} amount2
+   *
+   * @return {boolean}
+   *
+   * @example isLessThan('10.00', '5.00');
+   */
+  static isLessThan(amount1: string, amount2: string) {
+    amount1 = truncateStringDecimalPlaces(amount1, 2);
+    amount2 = truncateStringDecimalPlaces(amount2, 2);
+
+    return (
+      parseInt(amount1.replace('.', '')) < parseInt(amount2.replace('.', ''))
+    );
+  }
+
+  /**
+   * Compare two amounts.
+   *
+   * @param {string} amount1
+   * @param {string} amount2
+   *
+   * @return {boolean}
+   *
+   * @example isLessThanOrEqual('10.00', '5.00');
+   */
+  static isLessThanOrEqual(amount1: string, amount2: string) {
+    amount1 = truncateStringDecimalPlaces(amount1, 2);
+    amount2 = truncateStringDecimalPlaces(amount2, 2);
+
+    return (
+      parseInt(amount1.replace('.', '')) <= parseInt(amount2.replace('.', ''))
+    );
+  }
+
+  /**
    * Percentage of money value to amount.
    *
    * @param {string} amount
