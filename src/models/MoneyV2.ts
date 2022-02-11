@@ -52,7 +52,12 @@ class MoneyV2 {
 
   public getAmount(): string {
     const amountInCents = this.amountInCents.toString();
-    return `${amountInCents.slice(0, -2)}.${amountInCents.slice(-2)}`;
+    const integerAmount =
+      amountInCents.length > 2 ? amountInCents.slice(0, -2) : '0';
+    const decimalAmount =
+      amountInCents.length > 1 ? amountInCents.slice(-2) : `0${amountInCents}`;
+
+    return `${integerAmount}.${decimalAmount}`;
   }
 
   public getAmountInCents(): number {

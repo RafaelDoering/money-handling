@@ -35,6 +35,8 @@ console.log(money.getAmount());
 
 ## Changelog
 
+**2.0.1** - Fix get amount with only decimal values in MoneyV2
+
 **2.0.0** - Add class MoneyV2 with operation chaining
 
 **1.1.0** - Add comparation functions

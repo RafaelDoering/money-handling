@@ -45,10 +45,16 @@ describe('Instantiate', () => {
 });
 
 describe('Get amount', () => {
-  test('when called return amount', () => {
+  test('when called with integer amount return amount', () => {
     const amount = new MoneyV2('5000.00');
 
     expect(amount.getAmount()).toBe('5000.00');
+  });
+
+  test('when called with only decimal amount return amount', () => {
+    const amount = new MoneyV2('0.05');
+
+    expect(amount.getAmount()).toBe('0.05');
   });
 });
 
