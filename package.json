@@ -1,6 +1,6 @@
 {
   "name": "money-handling",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A lightweight money handling package",
   "main": "build/index.js",
   "types": "build/index.d.ts",
