@@ -83,3 +83,11 @@ describe('Subtract amount', () => {
     expect(newAmount).toBe('9.99');
   });
 });
+
+describe('Percentage', () => {
+  test('when valid value return updated instance', () => {
+    const amount = new MoneyV2('1.00');
+    const newAmount = amount.percentage('0.01%').getAmount();
+    expect(newAmount).toBe('0.01');
+  });
+});

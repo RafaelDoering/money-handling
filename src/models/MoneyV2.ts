@@ -41,6 +41,24 @@ class MoneyV2 {
     return this;
   }
 
+  /**
+   * Percentage of money.
+   *
+   * @param {string} percentage
+   *
+   * @return {object}
+   *
+   * @example money.percentage('5.00%');
+   */
+  public percentage(percentage: string): MoneyV2 {
+    this.amountInCents *= this.transformCurrencyToNumberInCents(
+      percentage.replace('%', '')
+    );
+    this.amountInCents /= 100;
+
+    return this;
+  }
+
   private transformCurrencyToNumberInCents(amount: string) {
     const regex = /^\d+(?:\.\d{2})$/;
     if (!regex.test(amount)) {
